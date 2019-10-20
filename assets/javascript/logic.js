@@ -25,6 +25,7 @@ function getGiphyData(searchStr){
         url: "http://api.giphy.com/v1/gifs/search?q=" + searchStr + "&api_key=" + giphyAPIKey,
         method: "GET"
     }).then(function (response) {
+        console.log(response)
         giphyData = response.data
         addGifImages(0,onLoadImgCount)
     });
@@ -33,9 +34,14 @@ function getGiphyData(searchStr){
 
 function addGifImages(lbound,ubound){
     for (var i = lbound; i < ubound; i++){
+        var newDiv = $("<Div>").addClass("gifImg border")
         var imgSource = giphyData[i].images.fixed_height_still.url
         var img = $("<img>").attr("id", "gifImg-" + i).attr("value", i).attr("src", imgSource)
-        $(".graphics").append(img)
+        var rating = $("<p>").attr("class", "rating").html("Rating: " + giphyData[i].rating.toUpperCase())
+
+        newDiv.append(img)
+        newDiv.append(rating)
+        $(".graphics").append(newDiv)
     }
 }
 
