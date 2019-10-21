@@ -11,10 +11,12 @@ var lastImgClickId = "-1"
 
 
 function createButtons(){
-    $(".topics").empty()
+    // $(".topics").empty()
+    $(".topic-item").remove();
+    // $(".topics *:not('.input-group')").remove();
 
     for (var i = 0; i < topics.length; i++){
-        var button = $("<button>").attr("value", topics[i]).html(topics[i])
+        var button = $("<button>").attr("value", topics[i]).attr("class", "btn btn-secondary topic-item").html(topics[i])
         $(".topics").append(button)
     }
 }
@@ -85,9 +87,12 @@ $(document).on("click", ".graphics img", function(){
 
 $("#addItem").on("click",function(event){
     event.preventDefault()
-    topics.push($("#search-string").val())
-    $("#search-string").val("")
-    createButtons()
+    
+    if($("#search-string").val().trim() != ""){
+        topics.push($("#search-string").val())
+        $("#search-string").val("")
+        createButtons()
+    }
 })
 
 
