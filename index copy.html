@@ -24,17 +24,16 @@
 			<div class="jumbotron"><h2>GifTastic!!</h2></div>
 			<div class="row">
 				<div class="col-2">
+                    
 					<div class="btn-group-vertical topics border-right" role="group">
-						<div class="input-group input-group-sm">
-							<input
-								id="search-string"
-								type="text"
-								class="form-control"
-								aria-label="Sizing example input"
-								aria-describedby="inputGroup-sizing-sm"
-							/>
-							<input id="addItem" type="button" />
-						</div>
+                        <form>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="search-string" placeholder="search" aria-label="Recipient's username" aria-describedby="button-addon2">
+                                <div class="input-group-append">
+                                    <button class="btn fas fa-search btn-customize" id="addItem" type="button"></button>
+                                </div>
+                            </div>
+                        </form>
 					</div>
 				</div>
 				<div class="col-10">
