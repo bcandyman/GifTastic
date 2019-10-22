@@ -11,9 +11,7 @@ var lastImgClickId = "-1"
 
 
 function createButtons(){
-    // $(".topics").empty()
     $(".topic-item").remove();
-    // $(".topics *:not('.input-group')").remove();
 
     for (var i = 0; i < topics.length; i++){
         var button = $("<button>").attr("value", topics[i]).attr("class", "btn btn-customize topic-item").html(topics[i])
