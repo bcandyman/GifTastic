@@ -16,13 +16,14 @@ function createButtons(){
     // $(".topics *:not('.input-group')").remove();
 
     for (var i = 0; i < topics.length; i++){
-        var button = $("<button>").attr("value", topics[i]).attr("class", "btn btn-secondary topic-item").html(topics[i])
+        var button = $("<button>").attr("value", topics[i]).attr("class", "btn btn-customize topic-item").html(topics[i])
         $(".topics").append(button)
     }
 }
 
 
 function getGiphyData(searchStr){
+    console.log("http://api.giphy.com/v1/gifs/search?q=" + searchStr + "&api_key=" + giphyAPIKey)
     $.ajax({
         url: "http://api.giphy.com/v1/gifs/search?q=" + searchStr + "&api_key=" + giphyAPIKey,
         method: "GET"
@@ -44,6 +45,15 @@ function addGifImages(lbound,ubound){
         newDiv.append(img)
         newDiv.append(rating)
         $(".graphics").append(newDiv)
+    }
+}
+
+
+function addTopicItem(){
+    if($("#search-string").val().trim() != ""){
+        topics.push($("#search-string").val())
+        addTopicItem($("#search-string").val(""))
+        createButtons()
     }
 }
 
@@ -87,13 +97,17 @@ $(document).on("click", ".graphics img", function(){
 
 $("#addItem").on("click",function(event){
     event.preventDefault()
-    
-    if($("#search-string").val().trim() != ""){
-        topics.push($("#search-string").val())
-        $("#search-string").val("")
-        createButtons()
-    }
+    addTopicItem()
 })
+
+
+
+$('form input').keydown(function (event) {
+    if (event.keyCode == 13) {
+        event.preventDefault()
+        addTopicItem()
+    }
+});
 
 
 
