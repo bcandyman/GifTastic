@@ -23,7 +23,7 @@ function createButtons(){
 function getGiphyData(searchStr){
     console.log("http://api.giphy.com/v1/gifs/search?q=" + searchStr + "&api_key=" + giphyAPIKey)
     $.ajax({
-        url: "http://api.giphy.com/v1/gifs/search?q=" + searchStr + "&api_key=" + giphyAPIKey,
+        url: "https://api.giphy.com/v1/gifs/search?q=" + searchStr + "&api_key=" + giphyAPIKey,
         method: "GET"
     }).then(function (response) {
         console.log(response)
