@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>GifTastic</title>
+
+		<link
+			href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+			crossorigin="anonymous"
+		/>
+		<link rel="stylesheet" href="assets/css/style.css" />
+
+		<script
+			src="https://kit.fontawesome.com/36b5432847.js"
+			crossorigin="anonymous"
+		></script>
+	</head>
+	<body>
+		<div class="container border">
+			<div class="jumbotron"><h2>GifTastic!!</h2></div>
+			<div class="row">
+				<div class="col-2">
+					<div class="btn-group-vertical topics border-right" role="group">
+                        <form>
+                            <div class="input-group">
+                                <input type="text" class="form-control input-field-customize form-customize" id="search-string"                 placeholder="search" aria-label="Recipient's username" aria-describedby="button-addon2">
+                                <div class="input-group-append">
+                                    <button class="btn fas fa-search btn-customize form-customize" id="addItem" type="button"></button>
+                                </div>
+                            </div>
+                        </form>
+					</div>
+				</div>
+				<div class="col-10">
+					<div class="graphics"></div>
+				</div>
+			</div>
+		</div>
+		<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+		<script src="assets/javascript/logic.js"></script>
+	</body>
+</html>
