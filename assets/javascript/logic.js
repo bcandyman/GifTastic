@@ -1,10 +1,11 @@
 var topics = ["cats", "dogs", "giraffes"];
 var isAnimated = false;
-var activeObject = {}
+var activeItem = ""
 var giphyAPIKey = "eSqZO6ojSUC2LlqL8j6ip1Yycn1xHueV";
 var onLoadImgCount = 10
 var giphyData = {}
 var lastImgClickId = "-1"
+var favoriteCounter = 1
 
 
 
@@ -12,9 +13,8 @@ var lastImgClickId = "-1"
 
 function createButtons(){
     $(".topic-item").remove();
-
     for (var i = 0; i < topics.length; i++){
-        var button = $("<button>").attr("value", topics[i]).attr("class", "btn btn-customize topic-item").html(topics[i])
+        var button = $("<button>").attr("id",topics[i]).attr("value", topics[i]).attr("class", "btn btn-customize topic-item").html(topics[i])
         $(".topics").append(button)
     }
 }
@@ -47,11 +47,42 @@ function addGifImages(lbound,ubound){
 }
 
 
-function addTopicItem(){
-    if($("#search-string").val().trim() != ""){
-        topics.push($("#search-string").val())
-        addTopicItem($("#search-string").val(""))
+function addTopicItem(itemName){
+    console.log("itemName: " + itemName)
+    if(itemName != ""){
+        topics.push(itemName)
         createButtons()
+    }
+}
+
+
+function deactivateTopicBtn(selectorItem){
+    $(selectorItem).removeClass("btn-active")
+}
+
+
+function activateTopicBtn(selectorItem){
+    console.log("Yes")
+    $(selectorItem).addClass("btn-active")
+}
+
+
+function activateSelectedTopic(btnObj){
+    activeItem = btnObj.value;
+    isAnimated = false;
+    deactivateTopicBtn(".topic-item")
+    $(".graphics").empty();
+    getGiphyData(activeItem)
+    activateTopicBtn(btnObj)
+}
+
+
+function duplicateTopics(topic){
+    if (topics.includes(topic)){
+        return true
+    }
+    else{
+        return false
     }
 }
 
@@ -59,15 +90,6 @@ function addTopicItem(){
 
 
 
-
-
-
-$(document).on("click", ".topics button", function(){
-    isAnimated = false;
-    $(".graphics").empty();
-    console.log(this)
-    getGiphyData(this.value)
-});
 
 
 
@@ -89,25 +111,72 @@ $(document).on("click", ".graphics img", function(){
         isAnimated=true;
     }
     lastImgClickId = this.id
+    console.log("this.id: " + this.id)
 });
 
+
+$(document).on("click","#add-to-favorites", function(){
+    if (activeItem !== ""){
+        var a_fav = $("<a>").attr("data-favorite",activeItem).addClass("dropdown-item favorite-item").html(activeItem)
+        $(".dropdown-menu").append(a_fav)
+        
+        localStorage.setItem("favoriteItem-" + favoriteCounter, activeItem)
+        favoriteCounter++
+        }
+});
+
+
+$(document).on("click",".favorite-item", function(){
+    var searchString = $(this).attr("data-favorite")
+    if (!duplicateTopics(searchString)){
+        addTopicItem(searchString)
+    }
+    activateSelectedTopic(document.getElementById(searchString))
+    // addTopicItem($(this).attr("data-favorite"))
+});
 
 
 $("#addItem").on("click",function(event){
     event.preventDefault()
-    addTopicItem()
+    var searchString = $("#search-string").val().trim()
+    if (!duplicateTopics(searchString)){
+        addTopicItem(searchString)
+    }
+    activateSelectedTopic(document.getElementById(searchString))
 })
-
 
 
 $('form input').keydown(function (event) {
     if (event.keyCode == 13) {
         event.preventDefault()
-        addTopicItem()
+        var searchString = $("#search-string").val().trim()
+        if (!duplicateTopics(searchString)){
+            addTopicItem(searchString)
+        }
+        activateSelectedTopic(document.getElementById(searchString))
     }
 });
+
+$(document).on("click", ".topics button", function(){
+    activateSelectedTopic(this)
+});
+
+
 
 
 
 //Startup
 createButtons()
+
+
+
+
+
+while (localStorage.getItem("favoriteItem-" + favoriteCounter) !== null){
+    
+    var favItem = localStorage.getItem("favoriteItem-" + favoriteCounter)
+    var a_fav = $("<a>").attr("data-favorite",favItem).addClass("dropdown-item favorite-item").html(favItem)
+
+    $(".dropdown-menu").append(a_fav)
+    favoriteCounter++
+}
