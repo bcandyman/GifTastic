@@ -58,6 +58,17 @@ form{
     border-top-left-radius: 5px !important;
 }
 
+.jumbotron{
+    background-image: url("../images/Giftastic.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 200PX;
+    padding-top: 10PX;
+    margin-top: 20px;
+    
+    ;
+}
+
 
 
 
