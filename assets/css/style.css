@@ -6,6 +6,10 @@ body{
     background-image: url("../images/dynamic-style.png");
 }
 
+form{
+    float: right;
+}
+
 .btn-customize{
     background-color: white;
     border:rgb(107, 144, 145)  1px solid;
@@ -13,6 +17,15 @@ body{
 }
 
 .btn-customize:hover{
+    background-color: cadetblue;
+    color: white;
+}
+
+.btn-favorites-dropdown{
+    max-width: 100px;
+}
+
+.btn-active{
     background-color: cadetblue;
     color: white;
 }
@@ -36,9 +49,18 @@ body{
 
 .input-field-customize{
     border:rgb(107, 144, 145)  1px solid;
+    max-width: 150px;
+    margin-left: 10px;
 }
 
-.form-customize{
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
+.input-field-customize{
+    border-bottom-left-radius: 5px !important;
+    border-top-left-radius: 5px !important;
 }
+
+
+
+
+
+
+
