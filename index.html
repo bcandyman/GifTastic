@@ -21,26 +21,44 @@
 	</head>
 	<body>
 		<div class="container border">
-			<div class="jumbotron"><h2>GifTastic!!</h2></div>
+            <div class="jumbotron">
+                <!-- <h2>GifTastic!!</h2> -->
+                <form>
+                    <div class="input-group">
+                        <div class="dropdown">
+                            <button class="btn btn-customize dropdown-toggle btn-favorites-dropdown" type="button" id="favorites-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Favorites
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" id="add-to-favorites" href="#">Add Favorite</a>
+                                <hr>
+                            </div>
+                        </div>  
+                        <input type="text" class="form-control input-field-customize form-customize" id="search-string" placeholder="search" aria-label="Recipient's username" aria-describedby="button-addon2">
+                        <div class="input-group-append">
+                            <button class="btn fas fa-search btn-customize form-customize" id="addItem" type="button"></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
 			<div class="row">
 				<div class="col-2">
 					<div class="btn-group-vertical topics border-right" role="group">
-                        <form>
-                            <div class="input-group">
-                                <input type="text" class="form-control input-field-customize form-customize" id="search-string"                 placeholder="search" aria-label="Recipient's username" aria-describedby="button-addon2">
-                                <div class="input-group-append">
-                                    <button class="btn fas fa-search btn-customize form-customize" id="addItem" type="button"></button>
-                                </div>
-                            </div>
-                        </form>
+                        <!-- topic items to be placed here. -->
 					</div>
-				</div>
+                </div>
 				<div class="col-10">
 					<div class="graphics"></div>
 				</div>
 			</div>
-		</div>
-		<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+
+        <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+		<!-- <script src="https://code.jquery.com/jquery-3.4.1.js"></script> -->
 		<script src="assets/javascript/logic.js"></script>
 	</body>
 </html>
