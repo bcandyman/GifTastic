@@ -1,4 +1,4 @@
-var topics = ["cats", "dogs", "giraffes"];
+var topics = ["Farley", "Crash", "2019 World Series", "MM93"];
 var isAnimated = false;
 var activeItem = ""
 var giphyAPIKey = "eSqZO6ojSUC2LlqL8j6ip1Yycn1xHueV";
@@ -22,12 +22,10 @@ function createButtons(){
 
 
 function getGiphyData(searchStr){
-    console.log("http://api.giphy.com/v1/gifs/search?q=" + searchStr + "&api_key=" + giphyAPIKey)
     $.ajax({
         url: "https://api.giphy.com/v1/gifs/search?q=" + searchStr + "&api_key=" + giphyAPIKey,
         method: "GET"
     }).then(function (response) {
-        console.log(response)
         giphyData = response.data
         addGifImages(0,onLoadImgCount)
     });
@@ -46,25 +44,19 @@ function addGifImages(lbound,ubound){
         $(".graphics").append(newDiv)
 
     }
-    console.log("More Button")
     generateMoreButton(ubound)
 }
 
 
 function generateMoreButton(ubound){
     if (ubound < giphyData.length){
-        var newDiv = $("<Div>").addClass("gifImg border more-div")
-        $(".graphics").append(newDiv)
-
-        var moreImagesButton = $("<button>").attr("id","btn-more").html("Get More")
-        console.log("Create the more button")
+        //build the more button here.
     }
 }
 
 
 
 function addTopicItem(itemName){
-    console.log("itemName: " + itemName)
     if(itemName != ""){
         topics.push(itemName)
         createButtons()
@@ -78,7 +70,6 @@ function deactivateTopicBtn(selectorItem){
 
 
 function activateTopicBtn(selectorItem){
-    console.log("Yes")
     $(selectorItem).addClass("btn-active")
 }
 
@@ -127,12 +118,10 @@ $(document).on("click", ".graphics img", function(){
         isAnimated=true;
     }
     lastImgClickId = this.id
-    console.log("this.id: " + this.id)
 });
 
 
 $(document).on("click","#add-to-favorites", function(){
-    console.log(duplicateTopics(favoriteItems))
     if (activeItem !== ""){
         if (!duplicateTopics(favoriteItems,activeItem)){
         var a_fav = $("<a>").attr("data-favorite",activeItem).addClass("dropdown-item favorite-item").html(activeItem)
@@ -157,10 +146,13 @@ $(document).on("click",".favorite-item", function(){
 $("#addItem").on("click",function(event){
     event.preventDefault()
     var searchString = $("#search-string").val().trim()
-    if (!duplicateTopics(searchString)){
-        addTopicItem(searchString)
+    if (searchString !== ""){
+        if (!duplicateTopics(topics, searchString)){
+            addTopicItem(searchString)
+            $("#search-string").val(null)
+        }
+        activateSelectedTopic(document.getElementById(searchString))
     }
-    activateSelectedTopic(document.getElementById(searchString))
 })
 
 
@@ -168,10 +160,13 @@ $('form input').keydown(function (event) {
     if (event.keyCode == 13) {
         event.preventDefault()
         var searchString = $("#search-string").val().trim()
-        if (!duplicateTopics(topics, searchString)){
-            addTopicItem(searchString)
+        if (searchString !== ""){
+            if (!duplicateTopics(topics, searchString)){
+                addTopicItem(searchString)
+                $("#search-string").val(null)
+            }
+            activateSelectedTopic(document.getElementById(searchString))
         }
-        activateSelectedTopic(document.getElementById(searchString))
     }
 });
 
@@ -187,7 +182,6 @@ $(document).on("click","#clear-favorites", function(){
         favoriteCounter--
     }
     $(".favorite-item").remove()
-    console.log(favoriteItems)
 });
 
 
@@ -196,7 +190,6 @@ $(document).on("click","#clear-favorites", function(){
 
 //Startup
 createButtons()
-
 
 
 while (localStorage.getItem("favoriteItem-" + favoriteCounter) !== null){
