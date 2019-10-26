@@ -5,7 +5,8 @@ var giphyAPIKey = "eSqZO6ojSUC2LlqL8j6ip1Yycn1xHueV";
 var onLoadImgCount = 10
 var giphyData = {}
 var lastImgClickId = "-1"
-var favoriteCounter = 1
+var favoriteCounter = 0
+var favoriteItems = []
 
 
 
@@ -43,8 +44,23 @@ function addGifImages(lbound,ubound){
         newDiv.append(img)
         newDiv.append(rating)
         $(".graphics").append(newDiv)
+
+    }
+    console.log("More Button")
+    generateMoreButton(ubound)
+}
+
+
+function generateMoreButton(ubound){
+    if (ubound < giphyData.length){
+        var newDiv = $("<Div>").addClass("gifImg border more-div")
+        $(".graphics").append(newDiv)
+
+        var moreImagesButton = $("<button>").attr("id","btn-more").html("Get More")
+        console.log("Create the more button")
     }
 }
+
 
 
 function addTopicItem(itemName){
@@ -77,8 +93,8 @@ function activateSelectedTopic(btnObj){
 }
 
 
-function duplicateTopics(topic){
-    if (topics.includes(topic)){
+function duplicateTopics(collectionArr, name){
+    if (collectionArr.includes(name)){
         return true
     }
     else{
@@ -116,23 +132,25 @@ $(document).on("click", ".graphics img", function(){
 
 
 $(document).on("click","#add-to-favorites", function(){
+    console.log(duplicateTopics(favoriteItems))
     if (activeItem !== ""){
+        if (!duplicateTopics(favoriteItems,activeItem)){
         var a_fav = $("<a>").attr("data-favorite",activeItem).addClass("dropdown-item favorite-item").html(activeItem)
         $(".dropdown-menu").append(a_fav)
         
         localStorage.setItem("favoriteItem-" + favoriteCounter, activeItem)
         favoriteCounter++
         }
+    }
 });
 
 
 $(document).on("click",".favorite-item", function(){
     var searchString = $(this).attr("data-favorite")
-    if (!duplicateTopics(searchString)){
+    if (!duplicateTopics(topics, searchString)){
         addTopicItem(searchString)
     }
     activateSelectedTopic(document.getElementById(searchString))
-    // addTopicItem($(this).attr("data-favorite"))
 });
 
 
@@ -150,7 +168,7 @@ $('form input').keydown(function (event) {
     if (event.keyCode == 13) {
         event.preventDefault()
         var searchString = $("#search-string").val().trim()
-        if (!duplicateTopics(searchString)){
+        if (!duplicateTopics(topics, searchString)){
             addTopicItem(searchString)
         }
         activateSelectedTopic(document.getElementById(searchString))
@@ -162,6 +180,17 @@ $(document).on("click", ".topics button", function(){
 });
 
 
+$(document).on("click","#clear-favorites", function(){
+    favoriteCounter--
+    while (localStorage.getItem("favoriteItem-" + favoriteCounter) !== null){
+        localStorage.removeItem("favoriteItem-" + favoriteCounter)
+        favoriteCounter--
+    }
+    $(".favorite-item").remove()
+    console.log(favoriteItems)
+});
+
+
 
 
 
@@ -170,13 +199,10 @@ createButtons()
 
 
 
-
-
 while (localStorage.getItem("favoriteItem-" + favoriteCounter) !== null){
-    
     var favItem = localStorage.getItem("favoriteItem-" + favoriteCounter)
     var a_fav = $("<a>").attr("data-favorite",favItem).addClass("dropdown-item favorite-item").html(favItem)
-
     $(".dropdown-menu").append(a_fav)
+    favoriteItems.push(favItem)
     favoriteCounter++
 }
